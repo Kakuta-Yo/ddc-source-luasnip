@@ -79,26 +79,28 @@ class LuaSnipInterface {
   ): Promise<LuaSnipData[]> {
     try {
       const luaCode = `
-        local ok, luasnip = pcall(require, 'luasnip')
-        if not ok then
-          return {}
-        end
-        
-        local snippets = {}
-        local snip_list = luasnip.get_snippets('${filetype}') or {}
-        
-        for _, snip in ipairs(snip_list) do
-          table.insert(snippets, {
-            trigger = snip.trigger or '',
-            name = snip.name or '',
-            description = snip.dscr or '',
-            wordTrig = snip.wordTrig,
-            regTrig = snip.regTrig,
-            filetype = '${filetype}',
-          })
-        end
-        
-        return snippets
+        (function()
+          local ok, luasnip = pcall(require, 'luasnip')
+          if not ok then
+            return {}
+          end
+          
+          local snippets = {}
+          local snip_list = luasnip.get_snippets('${filetype}') or {}
+          
+          for _, snip in ipairs(snip_list) do
+            table.insert(snippets, {
+              trigger = snip.trigger or '',
+              name = snip.name or '',
+              description = snip.dscr or '',
+              wordTrig = snip.wordTrig,
+              regTrig = snip.regTrig,
+              filetype = '${filetype}',
+            })
+          end
+          
+          return snippets
+        end)()
       `;
 
       const result = await denops.call("luaeval", luaCode);
@@ -112,8 +114,10 @@ class LuaSnipInterface {
   async isLuaSnipAvailable(denops: Denops): Promise<boolean> {
     try {
       const luaCode = `
-        local ok, luasnip = pcall(require, 'luasnip')
-        return ok and luasnip ~= nil
+        (function()
+          local ok, luasnip = pcall(require, 'luasnip')
+          return ok and luasnip ~= nil
+        end)()
       `;
       const result = await denops.call("luaeval", luaCode);
       return Boolean(result);
