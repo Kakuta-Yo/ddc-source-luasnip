@@ -1,0 +1,164 @@
+*ddc-source-luasnip.txt*	LuaSnip source for ddc.vim
+
+Author  : Your Name <your.email@example.com>
+License : MIT license
+
+==============================================================================
+CONTENTS					*ddc-source-luasnip-contents*
+
+Introduction		|ddc-source-luasnip-introduction|
+Install			|ddc-source-luasnip-install|
+Examples		|ddc-source-luasnip-examples|
+Params			|ddc-source-luasnip-params|
+FAQ			|ddc-source-luasnip-faq|
+
+==============================================================================
+INTRODUCTION					*ddc-source-luasnip-introduction*
+
+*ddc-source-luasnip* is a source for |ddc.vim| that provides completion
+candidates from LuaSnip snippets.
+
+Features:
+- High performance with caching
+- Context-aware completion
+- Filetype-specific snippets
+- Real-time snippet updates
+- Rich completion information
+
+==============================================================================
+INSTALL						*ddc-source-luasnip-install*
+
+Requirements:
+- |Neovim| >= 0.10.0
+- |ddc.vim|
+- |denops.vim| >= 7.0
+- LuaSnip
+- Deno >= 1.45
+
+Install the plugin using your favorite plugin manager.
+
+Example using vim-plug:
+>
+	Plug 'vim-denops/denops.vim'
+	Plug 'Shougo/ddc.vim'
+	Plug 'L3MON4D3/LuaSnip'
+	Plug 'your-username/ddc-source-luasnip'
+<
+
+==============================================================================
+EXAMPLES					*ddc-source-luasnip-examples*
+
+Basic configuration:
+>
+	call ddc#custom#patch_global('sources', ['luasnip'])
+	call ddc#custom#patch_global('sourceOptions', {
+	      \   'luasnip': {
+	      \     'mark': '[LS]',
+	      \     'dup': v:false,
+	      \   },
+	      \ })
+	call ddc#enable()
+<
+
+Advanced configuration:
+>
+	call ddc#custom#patch_global('sourceParams', {
+	      \   'luasnip': {
+	      \     'enableCache': v:true,
+	      \     'cacheTimeout': 5000,
+	      \     'maxCandidates': 100,
+	      \     'filetypes': ['typescript', 'javascript'],
+	      \     'showCondition': v:true,
+	      \   },
+	      \ })
+<
+
+Filetype-specific configuration:
+>
+	call ddc#custom#patch_filetype('python', 'sourceParams', {
+	      \   'luasnip': {
+	      \     'maxCandidates': 50,
+	      \   },
+	      \ })
+<
+
+==============================================================================
+PARAMS						*ddc-source-luasnip-params*
+
+				*ddc-source-luasnip-param-mark*
+mark		(string)
+		Mark text displayed in completion menu.
+		Default: "[LS]"
+
+				*ddc-source-luasnip-param-dup*
+dup		(boolean)
+		Allow duplicate completion items.
+		Default: false
+
+				*ddc-source-luasnip-param-maxCandidates*
+maxCandidates	(number)
+		Maximum number of completion candidates to show.
+		Default: 500
+
+				*ddc-source-luasnip-param-enableCache*
+enableCache	(boolean)
+		Enable snippet caching for better performance.
+		Default: true
+
+				*ddc-source-luasnip-param-cacheTimeout*
+cacheTimeout	(number)
+		Cache timeout in milliseconds.
+		Default: 5000
+
+				*ddc-source-luasnip-param-filetypes*
+filetypes	(list)
+		List of allowed filetypes. Empty list means all filetypes.
+		Default: []
+
+				*ddc-source-luasnip-param-excludeFiletypes*
+excludeFiletypes	(list)
+		List of excluded filetypes.
+		Default: []
+
+				*ddc-source-luasnip-param-showCondition*
+showCondition	(boolean)
+		Show conditional snippets in completion.
+		Default: true
+
+				*ddc-source-luasnip-param-enableRegexTrigger*
+enableRegexTrigger	(boolean)
+		Enable regex trigger snippets.
+		Default: true
+
+				*ddc-source-luasnip-param-debug*
+debug		(boolean)
+		Enable debug logging.
+		Default: false
+
+==============================================================================
+FAQ						*ddc-source-luasnip-faq*
+
+Q: No snippets appear in completion
+A: Check the following:
+   1. LuaSnip is properly installed and loaded
+   2. Snippets are loaded in LuaSnip
+   3. Filetype settings match your current buffer
+   4. excludeFiletypes doesn't exclude current filetype
+
+Q: Performance is slow with many snippets
+A: Try these optimizations:
+   1. Enable caching: 'enableCache': v:true
+   2. Reduce maxCandidates: 'maxCandidates': 100
+   3. Increase cache timeout: 'cacheTimeout': 10000
+
+Q: LuaSnip not found error
+A: Ensure LuaSnip is installed and can be required:
+   :lua require('luasnip')
+
+Q: How to debug issues?
+A: Enable debug mode:
+   'debug': v:true
+   Then check messages with :messages
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
