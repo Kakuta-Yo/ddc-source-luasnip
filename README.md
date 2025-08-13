@@ -6,15 +6,6 @@ A [LuaSnip](https://github.com/L3MON4D3/LuaSnip) source for
 This plugin provides snippet completion from LuaSnip in ddc.vim's completion
 framework.
 
-## Features
-
-- 🚀 **High Performance**: Asynchronous snippet fetching with intelligent
-  caching
-- 🎯 **Context Aware**: Filetype-specific snippet completion
-- ⚙️ **Highly Configurable**: Extensive customization options
-- 🔄 **Real-time Updates**: Automatically reflects changes in LuaSnip snippets
-- 🏷️ **Rich Information**: Detailed snippet information in completion menu
-
 ## Requirements
 
 - [Neovim](https://neovim.io/) >= 0.10.0
@@ -206,36 +197,6 @@ call ddc#custom#patch_global('sourceParams', {
       \     'cacheTimeout': 10000,
       \   },
       \ })
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Run tests: `deno task test`
-6. Submit a pull request
-
-## Development
-
-### Running Tests
-
-```bash
-deno task test
-```
-
-### Linting and Formatting
-
-```bash
-deno task lint
-deno task fmt
-```
-
-### Type Checking
-
-```bash
-deno task check
 ```
 
 ## License
