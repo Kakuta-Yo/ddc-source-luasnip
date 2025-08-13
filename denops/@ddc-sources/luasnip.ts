@@ -278,7 +278,7 @@ export class Source extends BaseSource<Params> {
     return snippets.map((snippet) => ({
       word: snippet.trigger,
       abbr: snippet.name || snippet.trigger,
-      menu: `${sourceParams.mark} ${snippet.description || ""}`.trim(),
+      menu: snippet.description || "",
       info: this.buildInfoText(snippet),
       kind: "Snippet",
       dup: sourceParams.dup,
